@@ -1,9 +1,9 @@
-import { createServer } from 'http';
-import { parse } from 'querystring';
-import { Client } from 'discord.js';
-const client = new Client()
+const http = require('http');
+const querystring = require('querystring');
+const discord = require('discord.js');
+const client = new discord.Client()
 
-createServer(function (req, res) {
+http.createServer(function (req, res) {
     if (req.method == 'POST') {
         var data = ""
         req.on('data', function (chunk) {
@@ -15,7 +15,7 @@ createServer(function (req, res) {
                 res.end()
                 return
             }
-            var dataObject = parse(data)
+            var dataObject = querystring.parse(data)
             console.log("post:" + dataObject.type)
             if (dataObject.type == "wake") {
                 console.log("Woke up in post")
