@@ -1,10 +1,10 @@
 const http = require('http')
 const querystring = require('querystring')
 const discord = require('discord.js')
-import rules from './rule-list'
+const ruleList = require('./rule-list.js')
 const client = new discord.Client()
 
-const ruleNum = rules.length
+const ruleNum = ruleList.rules.length
 
 http.createServer(function (req, res) {
     if (req.method == 'POST') {
@@ -63,7 +63,7 @@ function getRandomRules(memberNum) {
             break
         }
     }
-    return randomRules.map(num => rules[num])
+    return randomRules.map(num => ruleList.rules[num])
 }
 
 client.login(process.env.DISCORD_BOT_TOKEN)
