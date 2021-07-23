@@ -1,4 +1,4 @@
-export default rules = [
+const rules = [
     '語尾に「にゃん」を付ける',
     '語尾に「わん」を付ける',
     '語尾に「ぴょん」を付ける',
