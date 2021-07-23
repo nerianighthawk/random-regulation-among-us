@@ -1,6 +1,6 @@
 import { createServer } from 'http';
 import { parse } from 'querystring';
-import discord from 'discord.js';
+import { Client } from 'discord.js';
 const client = new Client()
 
 createServer(function (req, res) {
