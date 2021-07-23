@@ -1,7 +1,10 @@
-const http = require('http');
-const querystring = require('querystring');
-const discord = require('discord.js');
+const http = require('http')
+const querystring = require('querystring')
+const discord = require('discord.js')
+import rules from './rule-list'
 const client = new discord.Client()
+
+const ruleNum = rules.length
 
 http.createServer(function (req, res) {
     if (req.method == 'POST') {
@@ -42,15 +45,25 @@ client.on('message', async msg => {
         const member = msg.member
         if (!member.voice.channel) return msg.channel.send('実行者がボイスチャンネルに参加していません')
         const vcMembers = member.voice.channel.members
-        const names = vcMembers.map(m => m.user.username)
-        vcMembers.forEach(vcm => {
-            vcm.user.send('あなたの縛り内容は\n')
-            vcm.user.send('「」')
-            vcm.user.send('\nです。')
+        const names = vcMembers.map(m => m.nickname)
+        const randomRules = getRandomRules(vcMembers.length)
+        vcMembers.forEach((vcm, idx) => {
+            vcm.user.send(`あなたの縛り内容は\n「${randomRules[idx]}」\nです。`)
         })
-        msg.channel.send(names.join('\n'))
-        msg.channel.send('\nに縛り内容を送信しました。')
+        msg.channel.send(names.join('\n')+`\nに縛り内容を送信しました。`)
     }
 })
+
+function getRandomRules(memberNum) {
+    var randomRules = []
+    while(randomRules.length < memberNum) {
+        var tmp = Math.floor(Math.random * ruleNum)
+        if(!randomRules.includes(tmp)) {
+            randomRules.push(tmp)
+            break
+        }
+    }
+    return randomRules.map(num => rules[num])
+}
 
 client.login(process.env.DISCORD_BOT_TOKEN)
