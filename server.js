@@ -38,18 +38,18 @@ client.on('message', async msg => {
 })
 
 client.on('message', async msg => {
-    if (msg.content !== '.rrau') {
-        const member = msg.author
-        if (!member.voice.channel) return message.channel.send('実行者がボイスチャンネルに参加していません')
-        const vcMenbers = menubar.voice.channel.members
-        const names = vcMenbers.map(m => m.user.username)
-        vcMenbers.array.forEach(vcm => {
+    if (msg.content === '.rrau') {
+        const member = msg.member
+        if (!member.voice.channel) return msg.channel.send('実行者がボイスチャンネルに参加していません')
+        const vcMembers = member.voice.channel.members
+        const names = vcMembers.map(m => m.user.username)
+        vcMembers.forEach(vcm => {
             vcm.user.send('あなたの縛り内容は\n')
             vcm.user.send('「」')
             vcm.user.send('\nです。')
         })
-        message.channel.send(names.join('\n'))
-        message.channel.send('\nに縛り内容を送信しました。')
+        msg.channel.send(names.join('\n'))
+        msg.channel.send('\nに縛り内容を送信しました。')
     }
 })
 
